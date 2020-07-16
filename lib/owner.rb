@@ -1,81 +1,73 @@
 class Owner
-  attr_reader :species
-  attr_accessor :name, :pets, :dog, :cat
+  # code goes here	  # code goes here
+  attr_reader :name, :species
 
   @@all = []
-  @@pets = {:dogs => [], :cat => []}
 
-  def initialize(species)
-    @species = species
+  def initialize(name, species = "human")
     @name = name
+    @species = species
     @@all << self
+
   end
+
 
   def self.all
     @@all
   end
 
   def self.count
-    @@all.length
+    @@all.size
   end
 
   def self.reset_all
     @@all.clear
-  end
+  end  
 
   def say_species
-    "I am a #{@species}."
+    "I am a #{species}."
   end
 
-  def pets
-    @@pets
+  def cats
+    Cat.all.select {|cat| cat.owner == self }
+  end 
+
+  def dogs
+    Dog.all.select {|dog| dog.owner == self}
   end
 
-  
-  def buy_cat(cat)
-    @@pets[:cat] << Cat.new(cat)
+
+
+  def buy_cat(name)
+     Cat.new(name, self)
   end
 
-  def buy_dog(dog)
-    @@pets[:dog] << Dog.new(dog)
+  def buy_dog(name)
+   Dog.new(name, self)
   end
 
-  def walk_dogs
-    @@pets[:dog].each do |dog|
-      dog.mood = 'happy'
-    end
+  def walk_dogs()
+    Dog.all.each {|dog| dog.mood = "happy"}
   end
 
-  def play_with_cats
-    @@pets[:cat].each do |cat|
-      cat.mood = 'happy'
-    end
-  end
-
-  
-
-  def list_pets
-    "I have #{pets[:dog].length} dog(s), and #{pets[:cat].length} cat(s)."
+  def feed_cats()
+    Cat.all.each{|cat| cat.mood = "happy"}
   end
 
   def sell_pets
-    pets.each do |pet, arr|
-      arr.map do |pet|
-        pet.mood = 'nervous'
-      end
-      arr.clear
+    cats.each do |cat|
+      cat.mood = "nervous"
+      cat.owner = nil
+    end
+    dogs.each do |dog|
+      dog.mood = "nervous"
+      dog.owner = nil
     end
   end
 
-end
-
-human = Owner.new("human")
-human2 = Owner.new("human2")
-
-Owner.all
-human.buy_cat("fluffy")
-human.buy_cat("whiskers")
-human.buy_dog("fido")
-human.buy_dog("maestro")
-
-human.list_pets
+  def list_pets
+    num_of_cats = self.cats.size
+    num_of_dogs = self.dogs.size
+    return "I have #{num_of_dogs} dog(s), and #{num_of_cats} cat(s)."
+  end  
+end 	end 
