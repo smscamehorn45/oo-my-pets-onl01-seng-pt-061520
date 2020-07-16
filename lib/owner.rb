@@ -70,4 +70,4 @@ class Owner
     num_of_dogs = self.dogs.size
     return "I have #{num_of_dogs} dog(s), and #{num_of_cats} cat(s)."
   end  
-end 	end 
+end 
