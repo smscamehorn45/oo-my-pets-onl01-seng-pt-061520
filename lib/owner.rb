@@ -3,7 +3,7 @@ class Owner
   attr_accessor :name, :pets, :dog, :cat
 
   @@all = []
-  @@pets = {:dogs => [], :cats => []}
+  @@pets = {:dogs => [], :cat => []}
 
   def initialize(species)
     @species = species
@@ -33,21 +33,21 @@ class Owner
 
   
   def buy_cat(cat)
-    @@pets[:cats] << Cat.new(cat)
+    @@pets[:cat] << Cat.new(cat)
   end
 
   def buy_dog(dog)
-    @@pets[:dogs] << Dog.new(dog)
+    @@pets[:dog] << Dog.new(dog)
   end
 
   def walk_dogs
-    @@pets[:dogs].each do |dog|
+    @@pets[:dog].each do |dog|
       dog.mood = 'happy'
     end
   end
 
   def play_with_cats
-    @@pets[:cats].each do |cat|
+    @@pets[:cat].each do |cat|
       cat.mood = 'happy'
     end
   end
@@ -55,7 +55,7 @@ class Owner
   
 
   def list_pets
-    "I have #{pets[:dogs].length} dog(s), and #{pets[:cats].length} cat(s)."
+    "I have #{pets[:dog].length} dog(s), and #{pets[:cat].length} cat(s)."
   end
 
   def sell_pets
